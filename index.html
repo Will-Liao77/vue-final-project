@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>final project</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="title">Movie Ordering</div>
+      <div class="searchbar">
+        <div class="bar">
+          <label for="search" class="findMovie">search movie :</label>
+          <input type="text" name="search" id="search" v-model="movieName" />
+          <span style="color: white">{{msg}}</span>
+        </div>
+      </div>
+      <div class="movie" @wheel.prevent="wheel($event)">
+        <div class="cards">
+          <div
+            class="card"
+            v-for="movie in movies"
+            v-if="movie.name == movieName?movieName:notFoundIt()"
+          >
+            <div class="left">
+              <div class="cover" :style="bgcss(movie.cover)"></div>
+            </div>
+            <div class="right">
+              <h2>{{movie.name}}</h2>
+              <h4>{{ movie.type }}</h4>
+              <p v-html="movie.description"></p>
+              <div class="price">$ {{ movie.price }}</div>
+              <div class="stock">
+                <label for="qty">qty:</label>
+                <input
+                  type="number"
+                  name="qty"
+                  id="qty"
+                  min="0"
+                  v-model="amount[movie._id]"
+                  value="1"
+                />
+              </div>
+              <button class="add" @click="addCart(movie, $event)">
+                + Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="buybox"
+        :style="bgcss(currentMovie.cover)"
+        v-if="currentMovie"
+      ></div>
+      <div class="fixed-control" @click="isCartOpen=!isCartOpen">
+        <i class="fa fa-shopping-cart">
+          <span>{{cart.length}}</span>
+        </i>
+      </div>
+      <div class="control" v-show="isCartOpen">
+        <div class="panel">
+          <h2 class="movieCart">Movie Cart</h2>
+
+          <ul>
+            <li v-for="(movie,mid) in cart">
+              <div class="thumbnail" :style="bgcss(movie.cover)"></div>
+
+              <h3>
+                {{movie.name}}
+                <button @click="deleteItem(movie)">
+                  <i class="fa fa-minus" aria-hidden="true"></i>
+                </button>
+                <div class="price">${{movie.price}}</div>
+              </h3>
+              <button class="AmountMinus" @click="AmountMinus(movie)">-</button>
+              <label for="showAmount" class="showAmount"
+                >{{cartAmount(movie)}}</label
+              >
+              <button class="AmountPlus" @click="AmountPlus(movie)">+</button>
+            </li>
+            <li v-if="!cart.length">
+              <h3>Empty Cart</h3>
+            </li>
+          </ul>
+          <hr />
+          <h2>$ {{totalPrice}}</h2>
+          <button @click="allDelete()">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </button>
+          <button class="checkout" @click="isCartCheckOut = !isCartCheckOut">
+            checkout
+          </button>
+        </div>
+      </div>
+
+      <div class="checkout" v-show="isCartCheckOut">
+        <div class="summary">
+          <div class="summaryPanel">
+            <h1>Shopping summary</h1>
+            <h2>you order {{totalMovies()}} movies</h2>
+            <h2>Total:${{totalPrice}}</h2>
+            <button @click="isCartCheckOut = !isCartCheckOut">ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./js/script.js"></script>
+  </body>
+</html>
