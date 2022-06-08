@@ -20,7 +20,23 @@
           <input type="text" name="search" id="search" v-model="movieName" />
           <span style="color: white">{{msg}}</span>
         </div>
+        <div class="setRemaind">
+          <label for="edit" style="color: #fff">Edit remainder :</label>
+          <input type="checkbox" name="edit" id="edit" v-model="isEdit" />
+          <div class="panel" v-if="isEdit">
+            <div class="set" v-for="movie in movies">
+              <label for="setMovie">{{ movie.name }}</label>
+              <input
+                type="number"
+                name="setMovie"
+                id="setMovie"
+                v-model="movie.remainder"
+              />
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="movie" @wheel.prevent="wheel($event)">
         <div class="cards">
           <div

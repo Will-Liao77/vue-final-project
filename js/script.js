@@ -9,6 +9,7 @@ let vm = new Vue({
     dict: {},
     amount: {},
     movieName: "",
+    isEdit: false,
     msg: "",
   },
   created() {
@@ -42,12 +43,22 @@ let vm = new Vue({
       });
       setTimeout(() => {
         if (this.cart.indexOf(movie) != -1) {
-          this.dict[movie._id] += parseInt(this.amount[movie._id]);
+          let temp = parseInt(this.amount[movie._id]);
+          if (temp + this.dict[movie._id] > movie.remainder) {
+            alert("已超過庫存量");
+            return;
+          }
+          this.dict[movie._id] += temp;
           return;
         }
-        this.cart.push(movie);
         if (isNaN(parseInt(this.amount[movie._id]))) this.amount[movie._id] = 1;
-        this.dict[movie._id] = parseInt(this.amount[movie._id]);
+        if (!(this.amount[movie._id] > movie.remainder)) {
+          this.cart.push(movie);
+          this.dict[movie._id] = parseInt(this.amount[movie._id]);
+          return;
+        }
+        this.amount[movie._id] = 1;
+        alert("已超過庫存量");
       }, 800);
       return;
     },
@@ -68,9 +79,14 @@ let vm = new Vue({
       return this.dict[movie._id];
     },
     AmountPlus(movie) {
-      this.dict[movie._id] += 1;
-      this.isCartOpen = false;
-      this.isCartOpen = true;
+      if (this.dict[movie._id] < movie.remainder) {
+        this.dict[movie._id] += 1;
+        this.isCartOpen = false;
+        this.isCartOpen = true;
+      } else {
+        alert("已超過庫存量");
+      }
+
       return;
     },
     AmountMinus(movie) {
