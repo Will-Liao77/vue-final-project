@@ -79,22 +79,23 @@ let vm = new Vue({
       return this.dict[movie._id];
     },
     AmountPlus(movie) {
-      if (this.dict[movie._id] < movie.remainder) {
-        this.dict[movie._id] += 1;
-        this.isCartOpen = false;
-        this.isCartOpen = true;
-      } else {
+      if (!(this.dict[movie._id] < movie.remainder)) {
         alert("已超過庫存量");
+        return;
       }
-
+      this.dict[movie._id] += 1;
+      this.isCartOpen = false;
+      this.isCartOpen = true;
       return;
     },
     AmountMinus(movie) {
-      if (this.dict[movie._id] != 0) {
-        this.dict[movie._id] -= 1;
-        this.isCartOpen = false;
-        this.isCartOpen = true;
+      if (!(this.dict[movie._id] != 1)) {
+        alert("商品數量至少1");
+        return;
       }
+      this.dict[movie._id] -= 1;
+      this.isCartOpen = false;
+      this.isCartOpen = true;
       return;
     },
     totalMovies() {
@@ -120,14 +121,6 @@ let vm = new Vue({
       });
     },
   },
-  computed: {
-    // totalPrice() {
-    // return this.cart
-    //   .map((movie) => movie.price * this.dict[movie._id])
-    //   .reduce((total, p) => total + p, 0);
-    // },
-  },
 });
 // TODO:
 //      查詢失敗對話框
-//      後台控制
