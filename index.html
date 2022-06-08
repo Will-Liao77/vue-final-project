@@ -90,7 +90,7 @@
             </li>
           </ul>
           <hr />
-          <h2>$ {{totalPrice}}</h2>
+          <h2>$ {{computed()}}</h2>
           <button @click="allDelete()">
             <i class="fa fa-trash" aria-hidden="true"></i>
           </button>
@@ -105,7 +105,7 @@
           <div class="summaryPanel">
             <h1>Shopping summary</h1>
             <h2>you order {{totalMovies()}} movies</h2>
-            <h2>Total:${{totalPrice}}</h2>
+            <h2>Total:${{computed()}}</h2>
             <button @click="isCartCheckOut = !isCartCheckOut">ok</button>
           </div>
         </div>

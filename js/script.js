@@ -91,6 +91,11 @@ let vm = new Vue({
     notFoundIt() {
       return this.movieName.length == 0;
     },
+    computed() {
+      return this.cart
+        .map((movie) => movie.price * this.dict[movie._id])
+        .reduce((total, p) => total + p, 0);
+    },
   },
   watch: {
     cart() {
@@ -100,10 +105,13 @@ let vm = new Vue({
     },
   },
   computed: {
-    totalPrice() {
-      return this.cart
-        .map((movie) => movie.price * this.dict[movie._id])
-        .reduce((total, p) => total + p, 0);
-    },
+    // totalPrice() {
+    // return this.cart
+    //   .map((movie) => movie.price * this.dict[movie._id])
+    //   .reduce((total, p) => total + p, 0);
+    // },
   },
 });
+// TODO:
+//      查詢失敗對話框
+//      後台控制
