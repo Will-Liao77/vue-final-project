@@ -17,8 +17,11 @@
       <div class="searchbar">
         <div class="bar">
           <label for="search" class="findMovie">search movie :</label>
+          <br />
           <input type="text" name="search" id="search" v-model="movieName" />
-          <span style="color: white">{{msg}}</span>
+          <br />
+          <button @click="filter()">search</button>
+          <button @click="reset()">clear</button>
         </div>
         <div class="setRemaind">
           <label for="edit" style="color: #fff">Edit remainder :</label>
@@ -26,6 +29,7 @@
           <div class="panel" v-if="isEdit">
             <div class="set" v-for="movie in movies">
               <label for="setMovie">{{ movie.name }}</label>
+              <br />
               <input
                 type="number"
                 name="setMovie"
@@ -39,11 +43,7 @@
 
       <div class="movie" @wheel.prevent="wheel($event)">
         <div class="cards">
-          <div
-            class="card"
-            v-for="movie in movies"
-            v-if="movie.name == movieName?movieName:notFoundIt()"
-          >
+          <div class="card" v-for="movie in movies">
             <div class="left">
               <div class="cover" :style="bgcss(movie.cover)"></div>
             </div>
@@ -53,7 +53,7 @@
               <p v-html="movie.description"></p>
               <div class="price">$ {{ movie.price }}</div>
               <div class="stock">
-                <label for="qty">qty:</label>
+                <label for="qty">數量 :</label>
                 <input
                   type="number"
                   name="qty"
@@ -107,7 +107,7 @@
           </ul>
           <hr />
           <h2>$ {{computed()}}</h2>
-          <button @click="allDelete()">
+          <button class="delete" @click="allDelete()">
             <i class="fa fa-trash" aria-hidden="true"></i>
           </button>
           <button class="checkout" @click="isCartCheckOut = !isCartCheckOut">

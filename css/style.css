@@ -285,6 +285,9 @@ body {
 .searchbar {
   margin-top: 7rem;
   margin-left: 3.2rem;
+  z-index: 1;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 .findMovie {
@@ -299,4 +302,8 @@ body {
 
 .set {
   color: #fff;
+}
+
+.checkout {
+  float: right;
 }

@@ -3,6 +3,7 @@ let vm = new Vue({
   data: {
     movies: [],
     cart: [],
+    recover: [],
     currentMovie: null,
     isCartOpen: false,
     isCartCheckOut: false,
@@ -17,6 +18,7 @@ let vm = new Vue({
 
     axios.get(apiUrl).then((res) => {
       this.movies = res.data;
+      this.recover = res.data;
     });
   },
   methods: {
@@ -106,12 +108,31 @@ let vm = new Vue({
       return count;
     },
     notFoundIt() {
+      if (this.movieName.length != 0) {
+        this.msg = "Not Found it";
+        return;
+      }
       return this.movieName.length == 0;
     },
     computed() {
       return this.cart
         .map((movie) => movie.price * this.dict[movie._id])
         .reduce((total, p) => total + p, 0);
+    },
+    filter() {
+      this.movies = this.movies.filter((movie) =>
+        movie.name.includes(this.movieName)
+      );
+
+      if (this.movies.length == 0) {
+        alert("查無此片");
+        this.movieName = "";
+        this.movies = this.recover;
+      }
+    },
+    reset() {
+      this.movieName = "";
+      this.movies = this.recover;
     },
   },
   watch: {
