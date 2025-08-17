@@ -1,0 +1,36 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#app {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: 60px 1fr;
+  grid-template-areas:
+    "navbar navbar"
+    "preview preview";
+}
+
+a {
+  font-size: 3rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* set grid area */
+.navbar {
+  grid-area: navbar;
+  background-color: antiquewhite;
+}
+
+.preview {
+  grid-area: preview;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 3rem;
+}
